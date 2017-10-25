@@ -1,28 +1,37 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
-#include <unistd>
-
+#include <unistd.h>
 void *fact(void *arg) {
-        int n; 
-        n = *((int *) arg);
+	int n; 
+	n = *((int *) arg);
 
-        int i;
-        long double result = 1;
-        for (i = 2; i <= n; i++) {  //loop factorial
-                result =result*i;
-        }
+	int i;
+	long double result = 1;
+	for (i = 2; i <= n; i++) {  //loop factorial
+		result =result*i;
+	}
 
-        
-
+	printf("Hasil %d! = %.0Lf\n", n, result);
+	
 }
 
+int main(int argb, char *arga[]) {
+	pthread_t tid[argb];
+	int j;
 
-int main(int argc, char *argv[]) {
-	pthread_t tid[argc-1];
-	int i;
+	for (j = 1; j < argb; j++) {  
+		
 
-	
+		int *nmr = (int*) malloc(sizeof(*nmr)); //alokasi memori karna factorial nanti besar jadinya
+		*nmr = atoi(arga[j]); //string to int 
+		pthread_create(&(tid[j]), NULL, &fact, (void*) nmr);
+	}
+
+	for (j = 1; j < argb; j++) {
+		pthread_join(tid[j], NULL);
+	}
 
 	return 0;
 }
+
