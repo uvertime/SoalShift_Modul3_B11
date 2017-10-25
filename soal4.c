@@ -1,8 +1,8 @@
+
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
-#include <unistd>
-
+#include <unistd.h>
 void *fact(void *arg) {
         int n; 
         n = *((int *) arg);
@@ -13,16 +13,8 @@ void *fact(void *arg) {
                 result =result*i;
         }
 
-        
+        printf("Hasil %d! = %.0Lf\n", n, result);
 
 }
 
 
-int main(int argc, char *argv[]) {
-	pthread_t tid[argc-1];
-	int i;
-
-	
-
-	return 0;
-}
